@@ -58,12 +58,14 @@
     document.getElementById('openNewTab').setAttribute('aria-pressed', 'true');
     document.getElementById('openNewTab').title = 'Editor maximized';
   });
-  let restoreDragged = false;
   let restorePointer = null;
+  let restorePressTimer = null;
+  let restoreDragging = false;
 
   function setRestorePosition(x, y) {
     const maxX = Math.max(8, window.innerWidth - restoreButton.offsetWidth - 8);
     const maxY = Math.max(8, window.innerHeight - restoreButton.offsetHeight - 8);
+
     x = Math.max(8, Math.min(x, maxX));
     y = Math.max(8, Math.min(y, maxY));
 
@@ -71,6 +73,7 @@
     restoreButton.style.top = `${y}px`;
     restoreButton.style.right = 'auto';
     restoreButton.style.bottom = 'auto';
+
     return { x, y };
   }
 
@@ -94,18 +97,37 @@
 
   loadRestorePosition();
 
+  function cancelRestorePress() {
+    if (restorePressTimer !== null) {
+      clearTimeout(restorePressTimer);
+      restorePressTimer = null;
+    }
+  }
+
   restoreButton.addEventListener('pointerdown', event => {
     if (!event.isPrimary || event.button !== 0) return;
+
     const rect = restoreButton.getBoundingClientRect();
-    restoreDragged = false;
+
     restorePointer = {
       id: event.pointerId,
       startX: event.clientX,
       startY: event.clientY,
       left: rect.left,
-      top: rect.top
+      top: rect.top,
+      cancelled: false
     };
+
+    restoreDragging = false;
     restoreButton.setPointerCapture(event.pointerId);
+
+    restorePressTimer = setTimeout(() => {
+      if (!restorePointer || restorePointer.id !== event.pointerId) return;
+      if (restorePointer.cancelled) return;
+
+      restoreDragging = true;
+      restoreButton.classList.add('is-dragging');
+    }, 450);
   });
 
   restoreButton.addEventListener('pointermove', event => {
@@ -114,39 +136,54 @@
     const dx = event.clientX - restorePointer.startX;
     const dy = event.clientY - restorePointer.startY;
 
-    if (!restoreDragged && Math.hypot(dx, dy) < 5) return;
-    restoreDragged = true;
+    if (!restoreDragging && Math.hypot(dx, dy) > 10) {
+      cancelRestorePress();
+      restorePointer.cancelled = true;
+      return;
+    }
 
-    setRestorePosition(restorePointer.left + dx, restorePointer.top + dy);
+    if (restoreDragging) {
+      setRestorePosition(restorePointer.left + dx, restorePointer.top + dy);
+    }
   });
 
-  function finishRestoreDrag(event) {
+  function finishRestorePointer(event) {
     if (!restorePointer || event.pointerId !== restorePointer.id) return;
 
-    if (restoreDragged) {
+    cancelRestorePress();
+
+    if (restoreDragging) {
+      const rect = restoreButton.getBoundingClientRect();
+      const position = setRestorePosition(rect.left, rect.top);
+      saveRestorePosition(position.x, position.y);
+    } else if (!restorePointer.cancelled) {
+      appShell.classList.remove('editor-maximized');
+      restoreButton.hidden = true;
+      document.getElementById('openNewTab').setAttribute('aria-pressed', 'false');
+      document.getElementById('openNewTab').title = 'Maximize editor';
+    }
+
+    restoreButton.classList.remove('is-dragging');
+    restoreDragging = false;
+    restorePointer = null;
+  }
+
+  restoreButton.addEventListener('pointerup', finishRestorePointer);
+
+  restoreButton.addEventListener('pointercancel', event => {
+    if (!restorePointer || event.pointerId !== restorePointer.id) return;
+
+    cancelRestorePress();
+
+    if (restoreDragging) {
       const rect = restoreButton.getBoundingClientRect();
       const position = setRestorePosition(rect.left, rect.top);
       saveRestorePosition(position.x, position.y);
     }
 
+    restoreButton.classList.remove('is-dragging');
+    restoreDragging = false;
     restorePointer = null;
-  }
-
-  restoreButton.addEventListener('pointerup', finishRestoreDrag);
-  restoreButton.addEventListener('pointercancel', finishRestoreDrag);
-
-  restoreButton.addEventListener('click', event => {
-    if (restoreDragged) {
-      event.preventDefault();
-      event.stopPropagation();
-      restoreDragged = false;
-      return;
-    }
-
-    appShell.classList.remove('editor-maximized');
-    restoreButton.hidden = true;
-    document.getElementById('openNewTab').setAttribute('aria-pressed', 'false');
-    document.getElementById('openNewTab').title = 'Maximize editor';
   });
 
   window.addEventListener('resize', () => {

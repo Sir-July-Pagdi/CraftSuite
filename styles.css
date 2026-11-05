@@ -88,11 +88,20 @@
   -webkit-tap-highlight-color: transparent;
 }
 .restore-button {
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  justify-content: center;
+  border-radius: 50%;
+  font-family: inherit;
+  font-size: 21px;
   touch-action: none;
   user-select: none;
   -webkit-user-select: none;
   cursor: grab;
 }
-.restore-button:active { cursor: grabbing; transform: scale(.96); }
-.restore-button span { white-space: nowrap; }
+.restore-button.is-dragging {
+  cursor: grabbing;
+  transform: scale(1.08);
+}
 .restore-button[hidden] { display: none !important; }
