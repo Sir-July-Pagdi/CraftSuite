@@ -45,6 +45,7 @@
   }
   document.querySelectorAll('[data-app]').forEach(el => el.addEventListener('click', () => navigate(el.dataset.app)));
   document.getElementById('backHome').addEventListener('click', () => navigate('home'));
+  document.getElementById('minimizeEditor').addEventListener('click', () => navigate('home'));
   document.getElementById('reloadEditor').addEventListener('click', () => { if (active !== 'home') frame.src = apps[active].path; });
   document.getElementById('openNewTab').addEventListener('click', () => { if (active !== 'home') window.open(apps[active].path, '_blank', 'noopener'); });
   menuButton.addEventListener('click', () => {
