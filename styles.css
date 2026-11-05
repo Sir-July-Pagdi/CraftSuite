@@ -87,6 +87,12 @@
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
-.restore-button:active { transform: scale(.96); }
+.restore-button {
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: grab;
+}
+.restore-button:active { cursor: grabbing; transform: scale(.96); }
 .restore-button span { white-space: nowrap; }
 .restore-button[hidden] { display: none !important; }
