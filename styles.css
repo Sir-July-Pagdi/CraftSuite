@@ -6,3 +6,63 @@
 .minimize-button{position:absolute;top:max(12px,env(safe-area-inset-top));right:max(12px,env(safe-area-inset-right));z-index:20;display:flex;align-items:center;gap:7px;padding:10px 14px;border:1px solid rgba(255,255,255,.22);border-radius:999px;background:rgba(24,29,42,.94);color:#fff;font-family:inherit;font-size:13px;font-weight:600;line-height:1.2;box-shadow:0 3px 14px rgba(0,0,0,.3);cursor:pointer;-webkit-tap-highlight-color:transparent}
 .minimize-button:active{transform:scale(.96)}
 .minimize-button span{white-space:nowrap}
+
+
+/* CraftSuite in-page editor maximize mode */
+.maximize-button{
+  position:absolute;
+  top:max(12px,env(safe-area-inset-top));
+  right:max(145px,calc(env(safe-area-inset-right) + 145px));
+  z-index:21;
+  display:flex;
+  align-items:center;
+  gap:7px;
+  padding:10px 14px;
+  border:1px solid rgba(255,255,255,.22);
+  border-radius:999px;
+  background:rgba(24,29,42,.94);
+  color:#fff;
+  font-family:inherit;
+  font-size:13px;
+  font-weight:600;
+  line-height:1.2;
+  box-shadow:0 3px 14px rgba(0,0,0,.3);
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+.maximize-button:active{transform:scale(.96)}
+.maximize-button span{white-space:nowrap}
+
+.app-shell.editor-maximized .sidebar,
+.app-shell.editor-maximized .topbar{
+  display:none!important;
+}
+.app-shell.editor-maximized .main-area{
+  position:static;
+  min-height:100dvh;
+}
+.app-shell.editor-maximized .editor-view{
+  position:fixed;
+  inset:0;
+  z-index:100;
+  display:flex;
+  padding:0;
+  background:var(--bg);
+}
+.app-shell.editor-maximized .editor-toolbar,
+.app-shell.editor-maximized .frame-footnote{
+  display:none!important;
+}
+.app-shell.editor-maximized .editor-frame-wrap{
+  position:absolute;
+  inset:0;
+  flex:none;
+  min-height:0;
+  border:0;
+  border-radius:0;
+  overflow:hidden;
+}
+.app-shell.editor-maximized .minimize-button,
+.app-shell.editor-maximized .maximize-button{
+  position:fixed;
+}
