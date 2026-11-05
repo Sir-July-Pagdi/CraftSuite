@@ -66,3 +66,27 @@
 .app-shell.editor-maximized .maximize-button{
   position:fixed;
 }
+
+
+/* Restore control shown only while the editor is maximized */
+.restore-button {
+  position: fixed;
+  right: max(14px, env(safe-area-inset-right));
+  bottom: max(14px, env(safe-area-inset-bottom));
+  z-index: 110;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 11px;
+  border: 1px solid rgba(255,255,255,.28);
+  border-radius: 9px;
+  background: rgba(24,29,42,.94);
+  color: #fff;
+  font: 600 12px/1.2 inherit;
+  box-shadow: 0 2px 10px rgba(0,0,0,.28);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.restore-button:active { transform: scale(.96); }
+.restore-button span { white-space: nowrap; }
+.restore-button[hidden] { display: none !important; }

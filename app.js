@@ -13,7 +13,7 @@
   const scrim = document.getElementById('scrim');
   const menuButton = document.getElementById('menuButton');
   const appShell = document.getElementById('appShell');
-  const maximizeButton = document.getElementById('maximizeEditor');
+  const restoreButton = document.getElementById('restoreEditor');
   let active = 'home';
 
   function closeMenu() {
@@ -24,10 +24,9 @@
     if (id !== 'home' && !apps[id]) id = 'home';
     active = id;
     appShell.classList.remove('editor-maximized');
-    maximizeButton.setAttribute('aria-pressed', 'false');
-    maximizeButton.setAttribute('aria-label', 'Maximize editor');
-    maximizeButton.title = 'Maximize editor';
-    maximizeButton.querySelector('span').textContent = 'Maximize';
+    restoreButton.hidden = true;
+    document.getElementById('openNewTab').setAttribute('aria-pressed', 'false');
+    document.getElementById('openNewTab').title = 'Maximize editor';
     document.querySelectorAll('[data-app]').forEach(el => el.classList.toggle('active', el.dataset.app === id && el.classList.contains('nav-item')));
     if (id === 'home') {
       homeView.hidden = false; editorView.hidden = true;
@@ -52,17 +51,20 @@
   }
   document.querySelectorAll('[data-app]').forEach(el => el.addEventListener('click', () => navigate(el.dataset.app)));
   document.getElementById('backHome').addEventListener('click', () => navigate('home'));
-  document.getElementById('minimizeEditor').addEventListener('click', () => navigate('home'));
-  maximizeButton.addEventListener('click', () => {
-    const maximized = !appShell.classList.contains('editor-maximized');
-    appShell.classList.toggle('editor-maximized', maximized);
-    maximizeButton.setAttribute('aria-pressed', String(maximized));
-    maximizeButton.setAttribute('aria-label', maximized ? 'Restore editor layout' : 'Maximize editor');
-    maximizeButton.title = maximized ? 'Restore editor layout' : 'Maximize editor';
-    maximizeButton.querySelector('span').textContent = maximized ? 'Restore' : 'Maximize';
+  document.getElementById('openNewTab').addEventListener('click', () => {
+    if (active === 'home') return;
+    appShell.classList.add('editor-maximized');
+    restoreButton.hidden = false;
+    document.getElementById('openNewTab').setAttribute('aria-pressed', 'true');
+    document.getElementById('openNewTab').title = 'Editor maximized';
+  });
+  restoreButton.addEventListener('click', () => {
+    appShell.classList.remove('editor-maximized');
+    restoreButton.hidden = true;
+    document.getElementById('openNewTab').setAttribute('aria-pressed', 'false');
+    document.getElementById('openNewTab').title = 'Maximize editor';
   });
   document.getElementById('reloadEditor').addEventListener('click', () => { if (active !== 'home') frame.src = apps[active].path; });
-  document.getElementById('openNewTab').addEventListener('click', () => { if (active !== 'home') window.open(apps[active].path, '_blank', 'noopener'); });
   menuButton.addEventListener('click', () => {
     const open = !sidebar.classList.contains('open');
     sidebar.classList.toggle('open', open); scrim.classList.toggle('show', open);
