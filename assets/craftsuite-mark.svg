@@ -1,1 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="18" fill="#7567f8"/><g fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"><path d="M20 21h11v11H20zM33 21h11v11H33zM20 34h11v11H20zM33 34h11v11H33z"/></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="icon-title">
+	<title id="icon-title">CraftSuite</title>
+	<rect width="64" height="64" fill="#7567f8"/>
+	<g fill="#fff">
+		<rect x="14" y="14" width="15" height="15" rx="3"/>
+		<rect x="35" y="14" width="15" height="15" rx="3"/>
+		<rect x="14" y="35" width="15" height="15" rx="3"/>
+		<rect x="35" y="35" width="15" height="15" rx="3"/>
+	</g>
+</svg>

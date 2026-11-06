@@ -1,6 +1,10 @@
 (() => {
   'use strict';
 
+  const selectionStyle = document.createElement('style');
+  selectionStyle.textContent = 'html, body, body *, canvas { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }';
+  document.head.append(selectionStyle);
+
   const movementThreshold = 8;
   const syntheticEvents = new WeakSet();
   let activeTouch = null;

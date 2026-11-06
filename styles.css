@@ -66,3 +66,9 @@
 }
 .restore-button.is-dragging { cursor: grabbing; }
 .restore-button[hidden] { display: none !important; }
+
+body, body * {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}

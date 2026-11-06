@@ -127,6 +127,9 @@
       document.getElementById('crumbCurrent').textContent = app.name;
       document.getElementById('editorTitle').textContent = app.name;
       document.getElementById('editorType').textContent = app.type;
+      document.getElementById('frameStatus').textContent = id === 'wordcraft'
+        ? 'AutoSave is unavailable in the browser. Use Save to download a copy.'
+        : 'Editor loaded from this CraftSuite installation.';
       document.getElementById('directLink').href = app.path;
       document.getElementById('openNewTab').hidden = false;
       document.title = `${app.name} — CraftSuite`;
