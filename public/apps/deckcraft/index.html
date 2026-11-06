@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
   <title>DeckCraft</title>
+  <script src="../touch-navigation.js" defer></script>
   
 <script type="module">
 import init, * as bindings from './deckcraft-web-1736dda13a1b2e0f.js';
@@ -19,7 +20,7 @@ dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
   <link rel="icon" href="./deckcraft-b8fcbb36ecec0385.ico" integrity="sha384-p+vOsZVOu4zkEhYVpSBm/6gR6LMTZ+hPcuNrzPZ3ScI+zYSqFol3f6oI0WWAjzjB"/>
   <style>
     html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #262626; }
-    #deckcraft_canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+    #deckcraft_canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; }
     #deckcraft_loading { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
       color: #b8b8b8; font: 14px system-ui, sans-serif; pointer-events: none; }
   </style>

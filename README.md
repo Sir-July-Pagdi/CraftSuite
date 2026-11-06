@@ -58,7 +58,7 @@ CraftSuite/
 
 ## iPad notes
 
-The shell is responsive and the original applications are browser/WASM builds. Actual iPad Safari compatibility depends on each upstream editor's own touch, memory, file-picker, download, and browser API behavior. Test each editor on the target iPad and Safari version before relying on it for important work. This is a browser app/PWA-style static site, not a native iPadOS app.
+The shell is responsive and the original applications are browser/WASM builds. Across all four editors, a one-finger drag on the canvas pans the view and a stationary tap still selects or activates items; use a mouse or the editor's controls to move objects. Other iPad Safari compatibility, including memory, file-picker, download, and browser API behavior, still depends on each upstream editor. Test each editor on the target iPad and Safari version before relying on it for important work. This is a browser app/PWA-style static site, not a native iPadOS app.
 
 ## Privacy
 
